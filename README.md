@@ -205,44 +205,59 @@ Press **F5** to launch the application.
 
 ## Login
 
-> Add Screenshot Here
+<img width="1920" height="1080" alt="{A76D8EDF-E543-44B4-9596-EF556F00D436}" src="https://github.com/user-attachments/assets/85396656-8dad-4286-99d5-754a4d21d9be" />
+
 
 ---
 
 ## Dashboard
 
-> Add Screenshot Here
+<img width="1920" height="1080" alt="{221C4330-D1AD-4B76-B106-D2EA20549C9D}" src="https://github.com/user-attachments/assets/022240ca-c65f-4385-9e06-3a85c6294925" />
+
 
 ---
 
 ## Borrowers
 
-> Add Screenshot Here
+<img width="1920" height="1080" alt="{8735C8A5-B667-4CC9-8B75-04F620B79B6C}" src="https://github.com/user-attachments/assets/56d8d33e-2da2-4ef6-a566-c553fcc64481" />
+<img width="1920" height="1080" alt="{1C892F87-F79A-4B13-8AE2-15F498BFA347}" src="https://github.com/user-attachments/assets/1ca97dde-c06d-448a-852e-150a48c7b7ab" />
+
 
 ---
 
 ## Loans
 
-> Add Screenshot Here
+<img width="1920" height="1080" alt="{559D1FEB-848E-40F6-855A-730B261CDB3E}" src="https://github.com/user-attachments/assets/995375bc-32ef-4983-bbc1-db57b1a58c7f" />
+
 
 ---
 
 ## Repayments
 
-> Add Screenshot Here
+<img width="1920" height="1080" alt="{B6175447-C8FB-4BFD-995D-ED080E2F937A}" src="https://github.com/user-attachments/assets/14ef80e6-48ad-4f6f-ac4f-e33f2b0ff469" />
+<img width="1920" height="1080" alt="{88DE328B-9459-4EF3-8EBC-642D343CF303}" src="https://github.com/user-attachments/assets/9bddb612-1eea-4bad-9c4a-6822d6e47598" />
+
+---
+
+## Customer Loan Statement
+
+<img width="1920" height="1080" alt="{4D7D5972-F3E8-4AC4-917F-D8B76FD4CDCB}" src="https://github.com/user-attachments/assets/ef076b16-aac5-4c16-ab93-cc8949d3151b" />
+
 
 ---
 
 # 📌 Future Enhancements
 
-* PDF Reports.
 * Excel Export.
 * Email Notifications.
-* Role Based Authentication.
-* Backup & Restore.
+* Role Based Access Control.
 * Loan Interest Calculator.
 * Dark Mode.
 * Cloud Synchronization.
+* SMS Notifications.
+* Multi User Support.
+* Data Analytics Dashboard.
+* Automatic Database Backup Scheduling.
 
 ---
 
