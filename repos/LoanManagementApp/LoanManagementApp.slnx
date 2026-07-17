@@ -1,0 +1,4 @@
+<Solution>
+  <Project Path="../LoanManagementAppSetup/LoanManagementAppSetup.vdproj" Type="Installer" />
+  <Project Path="LoanManagementApp.csproj" />
+</Solution>

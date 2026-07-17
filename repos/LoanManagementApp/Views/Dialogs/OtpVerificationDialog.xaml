@@ -1,0 +1,171 @@
+<Window x:Class="LoanManagementApp.Views.Dialogs.OtpVerificationDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="OTP Verification | او ٹی پی تصدیق"
+        Width="420" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="{DynamicResource DialogBackgroundBrush}">
+
+    <!-- ═══════════════════════════════════════════════════════════
+         OTP VERIFICATION DIALOG | او ٹی پی تصدیقی ڈائیلاگ
+         No LetterSpacing / CharacterSpacing used
+    ════════════════════════════════════════════════════════════════ -->
+
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/DarkTheme.xaml"/>
+                <ResourceDictionary Source="/Themes/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Title Bar -->
+            <RowDefinition Height="*"/>
+            <!-- Content -->
+            <RowDefinition Height="Auto"/>
+            <!-- Footer -->
+        </Grid.RowDefinitions>
+
+        <!-- ── TITLE BAR | عنوان بار ──────────────────────────────── -->
+        <Border Grid.Row="0"
+                Background="{DynamicResource HeaderBackgroundBrush}"
+                Padding="24,16">
+            <StackPanel>
+                <TextBlock Text="🔐 OTP Verification | او ٹی پی تصدیق"
+                           FontSize="{DynamicResource FontSizeLarge}"
+                           FontWeight="Bold"
+                           Foreground="{DynamicResource TextPrimaryBrush}"/>
+                <TextBlock Text="{Binding SubTitle}"
+                           FontSize="{DynamicResource FontSizeSmall}"
+                           Foreground="{DynamicResource TextSecondaryBrush}"
+                           Margin="0,4,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- ── CONTENT | مواد ─────────────────────────────────────── -->
+        <StackPanel Grid.Row="1" Margin="24,24,24,0">
+
+            <!-- Icon + Info | آئیکن اور معلومات -->
+            <Border Background="{DynamicResource InfoLightBrush}"
+                    BorderBrush="{DynamicResource InfoBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{DynamicResource RadiusMedium}"
+                    Padding="16,14"
+                    Margin="0,0,0,20">
+                <StackPanel>
+                    <TextBlock Text="📱 OTP Sent | او ٹی پی بھیجا گیا"
+                               FontSize="{DynamicResource FontSizeMedium}"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource InfoForegroundBrush}"/>
+                    <TextBlock Text="{Binding InfoMessage}"
+                               FontSize="{DynamicResource FontSizeSmall}"
+                               Foreground="{DynamicResource InfoForegroundBrush}"
+                               TextWrapping="Wrap"
+                               Margin="0,6,0,0"/>
+                </StackPanel>
+            </Border>
+
+            <!-- OTP Input Label | او ٹی پی ان پٹ لیبل -->
+            <TextBlock Text="Enter OTP Code | او ٹی پی کوڈ درج کریں"
+                       Style="{DynamicResource FormLabelStyle}"/>
+
+            <!-- OTP Input Box | او ٹی پی ان پٹ باکس -->
+            <TextBox x:Name="TxtOtp"
+                     Text="{Binding OtpCode, UpdateSourceTrigger=PropertyChanged}"
+                     Style="{DynamicResource AppTextBoxStyle}"
+                     MaxLength="6"
+                     FontSize="{DynamicResource FontSizeXLarge}"
+                     FontWeight="Bold"
+                     TextAlignment="Center"
+                     Margin="0,0,0,8"/>
+
+            <!-- Helper text | مددگار متن -->
+            <TextBlock Text="Enter the 6-digit code | 6 ہندسوں کا کوڈ درج کریں"
+                       FontSize="{DynamicResource FontSizeSmall}"
+                       Foreground="{DynamicResource TextSecondaryBrush}"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,16"/>
+
+            <!-- Countdown Timer | الٹی گنتی -->
+            <StackPanel HorizontalAlignment="Center" Margin="0,0,0,6">
+                <TextBlock Text="{Binding CountdownDisplay}"
+                           FontSize="{DynamicResource FontSizeMedium}"
+                           FontWeight="SemiBold"
+                           Foreground="{DynamicResource WarningForegroundBrush}"
+                           HorizontalAlignment="Center"
+                           Visibility="{Binding IsCountingDown,
+                               Converter={StaticResource BoolToVisibilityConverter}}"/>
+            </StackPanel>
+
+            <!-- Resend Button | دوبارہ بھیجیں بٹن -->
+            <Button Content="🔄 Resend OTP | دوبارہ او ٹی پی بھیجیں"
+                    x:Name="BtnResend"
+                    Style="{DynamicResource SecondaryButtonStyle}"
+                    HorizontalAlignment="Center"
+                    IsEnabled="{Binding CanResend}"
+                    Margin="0,0,0,20"/>
+
+            <!-- Status Message | حیثیت پیغام -->
+            <Border Visibility="{Binding HasStatusMessage,
+                        Converter={StaticResource BoolToVisibilityConverter}}"
+                    Background="{Binding IsStatusSuccess,
+                        Converter={StaticResource BoolToStatusBackgroundConverter}}"
+                    BorderBrush="{Binding IsStatusSuccess,
+                        Converter={StaticResource BoolToStatusBorderConverter}}"
+                    BorderThickness="1"
+                    CornerRadius="{DynamicResource RadiusMedium}"
+                    Padding="14,10"
+                    Margin="0,0,0,20">
+                <TextBlock Text="{Binding StatusMessage}"
+                           FontSize="{DynamicResource FontSizeSmall}"
+                           Foreground="{Binding IsStatusSuccess,
+                               Converter={StaticResource BoolToStatusForegroundConverter}}"
+                           TextWrapping="Wrap"
+                           HorizontalAlignment="Center"/>
+            </Border>
+
+        </StackPanel>
+
+        <!-- ── FOOTER BUTTONS | بٹنز ─────────────────────────────── -->
+        <Border Grid.Row="2"
+                Background="{DynamicResource HeaderBackgroundBrush}"
+                BorderBrush="{DynamicResource BorderBrush}"
+                BorderThickness="0,1,0,0"
+                Padding="24,14">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="⏳ Verifying... | تصدیق ہو رہی ہے..."
+                           FontSize="{DynamicResource FontSizeSmall}"
+                           Foreground="{DynamicResource TextSecondaryBrush}"
+                           VerticalAlignment="Center"
+                           Visibility="{Binding IsBusy,
+                               Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+                <Button Grid.Column="2"
+                        Content="✖ Cancel | منسوخ"
+                        x:Name="BtnCancel"
+                        Style="{DynamicResource SecondaryButtonStyle}"
+                        MinWidth="110"/>
+
+                <Button Grid.Column="4"
+                        Content="✅ Verify | تصدیق کریں"
+                        x:Name="BtnVerify"
+                        Style="{DynamicResource PrimaryButtonStyle}"
+                        MinWidth="130"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

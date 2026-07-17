@@ -1,0 +1,141 @@
+<Window x:Class="LoanManagementApp.Views.Dialogs.NotificationDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Notification"
+        Width="460" Height="Auto"
+        SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Style="{DynamicResource AppWindowStyle}">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/DarkTheme.xaml"/>
+                <ResourceDictionary Source="/Themes/Icons.xaml"/>
+                <ResourceDictionary Source="/Themes/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <!-- ── Outer Border with shadow effect | بیرونی بارڈر ── -->
+    <Border Background="{DynamicResource AppBackgroundBrush}"
+            BorderBrush="{DynamicResource BorderLightBrush}"
+            BorderThickness="1"
+            CornerRadius="{StaticResource RadiusLarge}">
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <!-- Title Bar -->
+                <RowDefinition Height="*"/>
+                <!-- Content -->
+                <RowDefinition Height="Auto"/>
+                <!-- Buttons -->
+            </Grid.RowDefinitions>
+
+            <!-- ── Title Bar | عنوان بار ── -->
+            <Border Grid.Row="0"
+                    Background="{DynamicResource CardBackgroundBrush}"
+                    CornerRadius="12,12,0,0"
+                    Padding="20,14"
+                    MouseLeftButtonDown="TitleBar_MouseDown">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Icon -->
+                    <Viewbox Grid.Column="0" Width="18" Height="18" Margin="0,0,10,0">
+                        <Path x:Name="IconPath"
+                              Data="{StaticResource IconCheck}"
+                              Fill="{DynamicResource SuccessBrush}"
+                              Stretch="Uniform"/>
+                    </Viewbox>
+
+                    <!-- Title Text -->
+                    <TextBlock x:Name="TxtTitle"
+                               Grid.Column="1"
+                               Text="✅ کامیاب | Success"
+                               FontSize="14"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextPrimaryBrush}"
+                               VerticalAlignment="Center"/>
+
+                    <!-- Close Button -->
+                    <Button Grid.Column="2"
+                            Content="✕"
+                            Width="28" Height="28"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            Foreground="{DynamicResource TextSecondaryBrush}"
+                            FontSize="13"
+                            Cursor="Hand"
+                            Click="BtnClose_Click"/>
+                </Grid>
+            </Border>
+
+            <!-- ── Content Area | مواد ── -->
+            <Border Grid.Row="1"
+                    Background="{DynamicResource CardBackgroundBrush}"
+                    Padding="24,20">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Large Icon -->
+                    <Border Grid.Column="0"
+                            x:Name="IconCircle"
+                            Width="52" Height="52"
+                            CornerRadius="26"
+                            Background="{DynamicResource SuccessLightBrush}"
+                            Margin="0,0,16,0"
+                            VerticalAlignment="Top">
+                        <Viewbox Width="26" Height="26">
+                            <Path x:Name="IconPathLarge"
+                                  Data="{StaticResource IconCheck}"
+                                  Fill="{DynamicResource SuccessBrush}"
+                                  Stretch="Uniform"/>
+                        </Viewbox>
+                    </Border>
+
+                    <!-- Message -->
+                    <TextBlock x:Name="TxtMessage"
+                               Grid.Column="1"
+                               Text=""
+                               FontSize="13"
+                               Foreground="{DynamicResource TextPrimaryBrush}"
+                               TextWrapping="Wrap"
+                               VerticalAlignment="Center"
+                               LineHeight="22"/>
+                </Grid>
+            </Border>
+
+            <!-- ── Separator ── -->
+            <Separator Grid.Row="1"
+                       VerticalAlignment="Bottom"
+                       Background="{DynamicResource BorderLightBrush}"
+                       Height="1" Margin="0"/>
+
+            <!-- ── Button Row | بٹن قطار ── -->
+            <Border Grid.Row="2"
+                    Background="{DynamicResource CardBackgroundBrush}"
+                    CornerRadius="0,0,12,12"
+                    Padding="20,14">
+                <Button x:Name="BtnOk"
+                        Content="✓  ٹھیک ہے | OK"
+                        Style="{StaticResource SuccessButtonStyle}"
+                        Width="140"
+                        HorizontalAlignment="Center"
+                        Click="BtnOk_Click"/>
+            </Border>
+
+        </Grid>
+    </Border>
+</Window>

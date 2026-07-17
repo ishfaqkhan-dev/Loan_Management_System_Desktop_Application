@@ -1,0 +1,135 @@
+<Window x:Class="LoanManagementApp.Views.Dialogs.ConfirmationDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Confirm | تصدیق کریں"
+        Width="420" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="{DynamicResource DialogBackgroundBrush}">
+
+    <!-- ═══════════════════════════════════════════════════════════
+         CONFIRMATION DIALOG | تصدیقی ڈائیلاگ
+         Reusable confirm / alert dialog — all text is bindable
+         دوبارہ استعمال کا تصدیقی ڈائیلاگ — تمام متن قابل باندھ
+         No LetterSpacing / CharacterSpacing used
+    ════════════════════════════════════════════════════════════════ -->
+
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/DarkTheme.xaml"/>
+                <ResourceDictionary Source="/Themes/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Title Bar -->
+            <RowDefinition Height="*"/>
+            <!-- Content -->
+            <RowDefinition Height="Auto"/>
+            <!-- Footer -->
+        </Grid.RowDefinitions>
+
+        <!-- ── TITLE BAR | عنوان بار ──────────────────────────────── -->
+        <Border Grid.Row="0"
+                Background="{DynamicResource HeaderBackgroundBrush}"
+                Padding="24,16">
+            <TextBlock Text="{Binding TitleText}"
+                       FontSize="{DynamicResource FontSizeLarge}"
+                       FontWeight="Bold"
+                       Foreground="White"/>
+        </Border>
+
+        <!-- ── CONTENT | مواد ─────────────────────────────────────── -->
+        <StackPanel Grid.Row="1" Margin="24,24,24,20">
+
+            <!-- Icon + Message Area | آئیکن اور پیغام -->
+            <Border Background="{Binding IsWarning,
+                        Converter={StaticResource BoolToWarningBackgroundConverter}}"
+                    BorderBrush="{Binding IsWarning,
+                        Converter={StaticResource BoolToWarningBorderConverter}}"
+                    BorderThickness="1"
+                    CornerRadius="{DynamicResource RadiusMedium}"
+                    Padding="20,16"
+                    Margin="0,0,0,16">
+                <StackPanel>
+                    <!-- Icon | آئیکن -->
+                    <TextBlock Text="{Binding IconText}"
+                               FontSize="36"
+                               HorizontalAlignment="Center"
+                               Margin="0,0,0,12"
+                               Foreground="White"/>
+
+                    <!-- Main Message | مرکزی پیغام -->
+                    <TextBlock Text="{Binding MessageText}"
+                               FontSize="{DynamicResource FontSizeMedium}"
+                               FontWeight="SemiBold"
+                               Foreground="{DynamicResource TextPrimaryBrush}"
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"/>
+
+                    <!-- Sub Message | ذیلی پیغام -->
+                    <TextBlock Text="{Binding SubMessageText}"
+                               FontSize="{DynamicResource FontSizeSmall}"
+                               Foreground="{DynamicResource TextSecondaryBrush}"
+                               TextWrapping="Wrap"
+                               TextAlignment="Center"
+                               Margin="0,8,0,0"
+                               Visibility="{Binding HasSubMessage,
+                                   Converter={StaticResource BoolToVisibilityConverter}}"/>
+                </StackPanel>
+            </Border>
+
+            <!-- Detail Info Panel (optional) | اختیاری تفصیل پینل -->
+            <Border Background="{DynamicResource TableHeaderBrush}"
+                    BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{DynamicResource RadiusMedium}"
+                    Padding="16,12"
+                    Visibility="{Binding HasDetailText,
+                        Converter={StaticResource BoolToVisibilityConverter}}">
+                <TextBlock Text="{Binding DetailText}"
+                           FontSize="{DynamicResource FontSizeSmall}"
+                           Foreground="{DynamicResource TextSecondaryBrush}"
+                           TextWrapping="Wrap"/>
+            </Border>
+
+        </StackPanel>
+
+        <!-- ── FOOTER BUTTONS | بٹنز ─────────────────────────────── -->
+        <Border Grid.Row="2"
+                Background="{DynamicResource HeaderBackgroundBrush}"
+                BorderBrush="{DynamicResource BorderBrush}"
+                BorderThickness="0,1,0,0"
+                Padding="24,14">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition Width="10"/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                    <!-- Cancel / No button | منسوخ / نہیں بٹن -->
+                    <Button Grid.Column="2"
+                            Content="{Binding CancelButtonText}"
+                            x:Name="BtnNo"
+                            Style="{DynamicResource SecondaryButtonStyle}"
+                            MinWidth="120"
+                            Padding="12,8"/>
+
+                    <!-- Confirm / Yes button | تصدیق / ہاں بٹن -->
+                    <Button Grid.Column="4"
+                            Content="{Binding ConfirmButtonText}"
+                            x:Name="BtnYes"
+                            Style="{Binding IsWarning, Converter={StaticResource BoolToDangerPrimaryButtonConverter}}"
+                            MinWidth="180"
+                            Padding="12,8"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>

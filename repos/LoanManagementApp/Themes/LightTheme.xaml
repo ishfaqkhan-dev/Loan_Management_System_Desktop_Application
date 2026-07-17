@@ -1,0 +1,88 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ═══════════════════════════════════════════════════════════
+         LIGHT THEME | روشن تھیم
+         LoanManagementApp - Light Color Palette
+    ════════════════════════════════════════════════════════════════ -->
+
+    <!-- ── Background Colors | پس منظر رنگ ── -->
+    <SolidColorBrush x:Key="AppBackgroundBrush"        Color="#F0F4F8"/>
+    <SolidColorBrush x:Key="SidebarBackgroundBrush"    Color="#1A237E"/>
+    <SolidColorBrush x:Key="CardBackgroundBrush"       Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="InputBackgroundBrush"      Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="HeaderBackgroundBrush"     Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="TableRowAltBrush"          Color="#F7F9FC"/>
+    <SolidColorBrush x:Key="TableHeaderBrush"          Color="#E8EDF5"/>
+    <SolidColorBrush x:Key="HoverBrush"                Color="#E3F2FD"/>
+    <SolidColorBrush x:Key="SelectedRowBrush"          Color="#BBDEFB"/>
+    <SolidColorBrush x:Key="DialogBackgroundBrush"     Color="#FFFFFF"/>
+
+    <!-- ── Primary Brand Colors | بنیادی رنگ ── -->
+    <SolidColorBrush x:Key="PrimaryBrush"              Color="#1A237E"/>
+    <SolidColorBrush x:Key="PrimaryLightBrush"         Color="#3949AB"/>
+    <SolidColorBrush x:Key="PrimaryDarkBrush"          Color="#0D1B5E"/>
+    <SolidColorBrush x:Key="PrimaryForegroundBrush"    Color="#FFFFFF"/>
+
+    <!-- ── Accent Colors | ہائی لائٹ رنگ ── -->
+    <SolidColorBrush x:Key="AccentBrush"               Color="#1565C0"/>
+    <SolidColorBrush x:Key="AccentLightBrush"          Color="#42A5F5"/>
+    <SolidColorBrush x:Key="AccentForegroundBrush"     Color="#FFFFFF"/>
+
+    <!-- ── Text Colors | متن رنگ ── -->
+    <SolidColorBrush x:Key="TextPrimaryBrush"          Color="#1A1A2E"/>
+    <SolidColorBrush x:Key="TextSecondaryBrush"        Color="#546E7A"/>
+    <SolidColorBrush x:Key="TextMutedBrush"            Color="#90A4AE"/>
+    <SolidColorBrush x:Key="TextOnPrimaryBrush"        Color="#FFFFFF"/>
+    <SolidColorBrush x:Key="TextOnSidebarBrush"        Color="#E8EAF6"/>
+    <SolidColorBrush x:Key="TextOnSidebarMutedBrush"   Color="#9FA8DA"/>
+    <SolidColorBrush x:Key="LabelTextBrush"            Color="#37474F"/>
+
+    <!-- ── Border Colors | کنارہ رنگ ── -->
+    <SolidColorBrush x:Key="BorderBrush"               Color="#CFD8DC"/>
+    <SolidColorBrush x:Key="BorderLightBrush"          Color="#ECEFF1"/>
+    <SolidColorBrush x:Key="BorderFocusBrush"          Color="#1A237E"/>
+    <SolidColorBrush x:Key="DividerBrush"              Color="#E0E7EF"/>
+
+    <!-- ── Status Colors | حیثیت رنگ ── -->
+    <SolidColorBrush x:Key="SuccessBrush"              Color="#2E7D32"/>
+    <SolidColorBrush x:Key="SuccessLightBrush"         Color="#E8F5E9"/>
+    <SolidColorBrush x:Key="SuccessForegroundBrush"    Color="#FFFFFF"/>
+
+    <SolidColorBrush x:Key="DangerBrush"               Color="#C62828"/>
+    <SolidColorBrush x:Key="DangerLightBrush"          Color="#FFEBEE"/>
+    <SolidColorBrush x:Key="DangerForegroundBrush"     Color="#FFFFFF"/>
+
+    <SolidColorBrush x:Key="WarningBrush"              Color="#E65100"/>
+    <SolidColorBrush x:Key="WarningLightBrush"         Color="#FFF3E0"/>
+    <SolidColorBrush x:Key="WarningForegroundBrush"    Color="#FFFFFF"/>
+
+    <SolidColorBrush x:Key="InfoBrush"                 Color="#0277BD"/>
+    <SolidColorBrush x:Key="InfoLightBrush"            Color="#E1F5FE"/>
+    <SolidColorBrush x:Key="InfoForegroundBrush"       Color="#FFFFFF"/>
+
+    <!-- ── Dashboard Card Colors | ڈیش بورڈ کارڈ رنگ ── -->
+    <SolidColorBrush x:Key="Card1Brush"                Color="#1A237E"/>
+    <SolidColorBrush x:Key="Card2Brush"                Color="#00695C"/>
+    <SolidColorBrush x:Key="Card3Brush"                Color="#C62828"/>
+    <SolidColorBrush x:Key="Card4Brush"                Color="#E65100"/>
+
+    <!-- ── Shadow / Overlay | سایہ ── -->
+    <SolidColorBrush x:Key="ShadowBrush"               Color="#1A000000"/>
+    <SolidColorBrush x:Key="OverlayBrush"              Color="#80000000"/>
+
+    <!-- ── Sidebar Item Hover | سائیڈ بار آئٹم ہور ── -->
+    <SolidColorBrush x:Key="SidebarHoverBrush"         Color="#283593"/>
+    <SolidColorBrush x:Key="SidebarActiveBrush"        Color="#3949AB"/>
+    <SolidColorBrush x:Key="SidebarActiveIndicator"    Color="#42A5F5"/>
+
+    <!-- ── Progress Bar | پیشرفت بار ── -->
+    <SolidColorBrush x:Key="ProgressBackgroundBrush"   Color="#E3F2FD"/>
+    <SolidColorBrush x:Key="ProgressFillBrush"         Color="#1565C0"/>
+
+    <!-- ── ScrollBar | اسکرول بار ── -->
+    <SolidColorBrush x:Key="ScrollBarThumbBrush"       Color="#B0BEC5"/>
+    <SolidColorBrush x:Key="ScrollBarTrackBrush"       Color="#ECEFF1"/>
+
+</ResourceDictionary>

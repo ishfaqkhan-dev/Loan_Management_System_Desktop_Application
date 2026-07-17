@@ -1,0 +1,187 @@
+<Window x:Class="LoanManagementApp.Views.SplashScreen"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Loan Management System"
+        Width="500" Height="340"
+        WindowStartupLocation="CenterScreen"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize"
+        Topmost="True">
+
+    <!-- ═══════════════════════════════════════════════════════════════
+         SPLASH SCREEN | اسپلیش اسکرین
+         Shown for ~3 seconds on startup, then transitions to MainWindow.
+         آغاز پر ~3 سیکنڈ کے لیے دکھائی جاتی ہے، پھر مرکزی ونڈو پر جاتی ہے۔
+    ════════════════════════════════════════════════════════════════════ -->
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/DarkTheme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <!-- Outer border gives rounded corners + drop shadow -->
+    <Border CornerRadius="20"
+            Background="#0F1117"
+            BorderBrush="#2A2D45"
+            BorderThickness="1">
+        <Border.Effect>
+            <DropShadowEffect Color="#000000"
+                              Opacity="0.7"
+                              BlurRadius="40"
+                              ShadowDepth="8"
+                              Direction="270"/>
+        </Border.Effect>
+
+        <!-- Root panel — holds everything, starts invisible, fades in -->
+        <StackPanel x:Name="RootPanel"
+                    VerticalAlignment="Center"
+                    HorizontalAlignment="Center"
+                    Opacity="0">
+
+            <!-- ── ANIMATED $ ICON | $ آئیکن ─────────────────────── -->
+            <!-- Glowing circle behind the icon -->
+            <Grid HorizontalAlignment="Center" Margin="0,0,0,0">
+
+                <!-- Glow ring (pulses) -->
+                <Ellipse x:Name="GlowRing"
+                         Width="110" Height="110"
+                         Opacity="0">
+                    <Ellipse.Fill>
+                        <RadialGradientBrush>
+                            <GradientStop Color="#553F51B5" Offset="0"/>
+                            <GradientStop Color="#00000000" Offset="1"/>
+                        </RadialGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+
+                <!-- Icon circle -->
+                <Ellipse Width="88" Height="88"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center">
+                    <Ellipse.Fill>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                            <GradientStop Color="#3F51B5" Offset="0"/>
+                            <GradientStop Color="#448AFF" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Ellipse.Fill>
+                </Ellipse>
+
+                <!-- $ symbol using the same Path data as the rest of the app -->
+                <Viewbox Width="44" Height="44"
+                         HorizontalAlignment="Center"
+                         VerticalAlignment="Center">
+                    <Canvas Width="24" Height="24">
+                        <Path Fill="White"
+                              Data="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+                    </Canvas>
+                </Viewbox>
+            </Grid>
+
+            <!-- ── APP NAME | ایپ کا نام ──────────────────────────── -->
+            <TextBlock x:Name="TxtAppName"
+                       Text="Loan Management System"
+                       FontSize="22"
+                       FontWeight="Bold"
+                       Foreground="#E8EAF6"
+                       HorizontalAlignment="Center"
+                       Margin="0,20,0,4"
+                       Opacity="0"/>
+
+            <!-- Urdu subtitle -->
+            <TextBlock Text="قرض مینجمنٹ سسٹم"
+                       FontSize="13"
+                       Foreground="#9FA8DA"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,6"/>
+
+            <!-- Divider line -->
+            <Rectangle Height="1"
+                       Width="260"
+                       Fill="#2A2D45"
+                       HorizontalAlignment="Center"
+                       Margin="0,8,0,10"/>
+
+            <!-- Developer credit | ڈویلپر کا نام -->
+            <TextBlock Text="Developed by Muhammad Ishfaq Khan"
+                       FontSize="11"
+                       Foreground="#7986CB"
+                       HorizontalAlignment="Center"
+                       Margin="0,0,0,24"/>
+
+            <!-- ── LOADING BAR | لوڈنگ بار ──────────────────────── -->
+            <Border Width="260"
+                    Height="4"
+                    CornerRadius="2"
+                    Background="#1A1D2E"
+                    HorizontalAlignment="Center">
+                <Border x:Name="LoadingBar"
+                        Height="4"
+                        CornerRadius="2"
+                        HorizontalAlignment="Left"
+                        Width="0">
+                    <Border.Background>
+                        <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                            <GradientStop Color="#3F51B5" Offset="0"/>
+                            <GradientStop Color="#448AFF" Offset="1"/>
+                        </LinearGradientBrush>
+                    </Border.Background>
+                </Border>
+            </Border>
+
+        </StackPanel>
+    </Border>
+
+    <!-- ── STORYBOARD ANIMATIONS | انیمیشنز ──────────────────────── -->
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+
+                    <!-- 1. Fade in the whole panel (0→1 over 0.6s) -->
+                    <DoubleAnimation Storyboard.TargetName="RootPanel"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0" To="1"
+                                     Duration="0:0:0.6"
+                                     BeginTime="0:0:0"/>
+
+                    <!-- 2. Scale-up icon circle (subtle pop, 0.7→1 over 0.5s) -->
+                    <!-- handled via RenderTransform on the Grid below via code-behind -->
+
+                    <!-- 3. App name slides up + fades in (BeginTime 0.3s) -->
+                    <DoubleAnimation Storyboard.TargetName="TxtAppName"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0" To="1"
+                                     Duration="0:0:0.6"
+                                     BeginTime="0:0:0.3"/>
+
+                    <!-- 4. Glow ring pulses -->
+                    <DoubleAnimation Storyboard.TargetName="GlowRing"
+                                     Storyboard.TargetProperty="Opacity"
+                                     From="0" To="0.8"
+                                     Duration="0:0:0.8"
+                                     BeginTime="0:0:0.2"
+                                     AutoReverse="True"
+                                     RepeatBehavior="Forever"/>
+
+                    <!-- 5. Loading bar fills from 0 to 260 over 2.6s (starts at 0.4s) -->
+                    <DoubleAnimation Storyboard.TargetName="LoadingBar"
+                                     Storyboard.TargetProperty="Width"
+                                     From="0" To="260"
+                                     Duration="0:0:4.6"
+                                     BeginTime="0:0:0.4">
+                        <DoubleAnimation.EasingFunction>
+                            <CubicEase EasingMode="EaseOut"/>
+                        </DoubleAnimation.EasingFunction>
+                    </DoubleAnimation>
+
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+
+</Window>

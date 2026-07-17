@@ -1,0 +1,396 @@
+<Window x:Class="LoanManagementApp.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Loan Management System | قرض مینجمنٹ سسٹم"
+        Height="720" Width="1200"
+        MinHeight="600" MinWidth="900"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource AppBackgroundBrush}"
+        Style="{DynamicResource AppWindowStyle}">
+
+    <Window.Resources>
+        <Style x:Key="WindowControlButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Foreground" Value="{DynamicResource TextOnSidebarBrush}"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" 
+                            Background="{TemplateBinding Background}"
+                            BorderThickness="0"
+                            CornerRadius="2">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                          VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" 
+                                    Property="Background" 
+                                    Value="#2A2D45"/>
+                                <!-- dark hover background -->
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" 
+                                    Property="Background" 
+                                    Value="#1A1D2E"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <!-- ═══════════════════════════════════════════════════════════
+         MAIN WINDOW | مرکزی ونڈو
+         Shell layout: Login overlay → Sidebar + Page Frame
+         لاگ ان اوورلے → سائیڈ بار + پیج فریم
+         No LetterSpacing / CharacterSpacing used
+    ════════════════════════════════════════════════════════════════ -->
+
+    <Grid>
+
+        <!-- Custom Title Bar | کسٹم ٹائٹل بار -->
+        <Grid Height="32" VerticalAlignment="Top" ZIndex="999"
+      Background="{DynamicResource SidebarBackgroundBrush}"
+      MouseLeftButtonDown="TitleBar_MouseDown">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Grid.Column="0" Text="Loan Management System"
+               Foreground="{DynamicResource TextOnSidebarBrush}"
+               FontSize="12" VerticalAlignment="Center" Margin="12,0"/>
+            <StackPanel Grid.Column="1" Orientation="Horizontal">
+                <Button Content="─" Width="46" Height="32" 
+                Style="{StaticResource WindowControlButtonStyle}"
+                Click="BtnMinimize_Click"/>
+                <Button Content="□" Width="46" Height="32" 
+                Style="{StaticResource WindowControlButtonStyle}"
+                Click="BtnMaximize_Click" Cursor="Hand"/>
+                <Button Content="✕" Width="46" Height="32"
+                Style="{StaticResource WindowControlButtonStyle}"
+                Click="BtnClose_Click" Cursor="Hand"/>
+            </StackPanel>
+        </Grid>
+
+        <!-- ══════════════════════════════════════════════════════
+             LAYER 1 — MAIN SHELL | مرکزی شیل
+             Sidebar + Page content area (hidden until login)
+        ═══════════════════════════════════════════════════════════ -->
+        <Grid x:Name="ShellGrid" Visibility="Collapsed" Margin="0,32,0,0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="220"/>
+                <!-- Sidebar -->
+                <ColumnDefinition Width="*"/>
+                <!-- Page content -->
+            </Grid.ColumnDefinitions>
+
+            <!-- ── SIDEBAR | سائیڈ بار ─────────────────────────────── -->
+            <Border Grid.Column="0"
+                    Background="{DynamicResource SidebarBackgroundBrush}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <!-- Logo / App Name -->
+                        <RowDefinition Height="16"/>
+                        <!-- Spacer -->
+                        <RowDefinition Height="*"/>
+                        <!-- Nav Items -->
+                        <RowDefinition Height="Auto"/>
+                        <!-- Bottom: user + logout -->
+                    </Grid.RowDefinitions>
+
+                    <!-- App Logo / Name | ایپ کا نام -->
+                    <Border Grid.Row="0"
+                            Padding="20,40,20,16"
+                            BorderBrush="{DynamicResource BorderLightBrush}"
+                            BorderThickness="0,0,0,1">
+                        <StackPanel>
+                            <Viewbox Width="36" Height="36" HorizontalAlignment="Center">
+                                <Canvas Width="24" Height="24">
+                                    <Path Fill="White"
+                                          Data="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+                                </Canvas>
+                            </Viewbox>
+                            <TextBlock Text="Loan Management System"
+                                       FontSize="{DynamicResource FontSizeMedium}"
+                                       FontWeight="Bold"
+                                       Foreground="{DynamicResource TextPrimaryBrush}"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,6,0,0"/>
+                            <TextBlock Text="قرض مینجمنٹ سسٹم"
+                                       FontSize="{DynamicResource FontSizeSmall}"
+                                       Foreground="{DynamicResource TextSecondaryBrush}"
+                                       HorizontalAlignment="Center"
+                                       Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Navigation Items | نیویگیشن آئٹمز -->
+                    <StackPanel Grid.Row="2" Margin="0,8,0,0">
+
+                        <!-- Dashboard | ڈیش بورڈ -->
+                        <Button x:Name="BtnNavDashboard"
+                                Style="{DynamicResource SidebarNavButtonStyle}"
+                                Tag="Dashboard">
+                            <StackPanel Orientation="Horizontal">
+                                <Viewbox Width="18" Height="18" VerticalAlignment="Center"><Canvas Width="24" Height="24"><Path Fill="White" Data="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></Canvas></Viewbox>
+                                <StackPanel Margin="12,0,0,0">
+                                    <TextBlock Text="Dashboard"
+                                               FontSize="{DynamicResource FontSizeNormal}"
+                                               FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextOnSidebarBrush}"/>
+                                    <TextBlock Text="ڈیش بورڈ"
+                                               FontSize="{DynamicResource FontSizeTiny}"
+                                               Foreground="{DynamicResource TextOnSidebarMutedBrush}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Customers | قرض دار -->
+                        <Button x:Name="BtnNavCustomers"
+                                Style="{DynamicResource SidebarNavButtonStyle}"
+                                Tag="Customers">
+                            <StackPanel Orientation="Horizontal">
+                                <Viewbox Width="18" Height="18" VerticalAlignment="Center"><Canvas Width="24" Height="24"><Path Fill="White" Data="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></Canvas></Viewbox>
+                                <StackPanel Margin="12,0,0,0">
+                                    <TextBlock Text="Customers"
+                                               FontSize="{DynamicResource FontSizeNormal}"
+                                               FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextOnSidebarBrush}"/>
+                                    <TextBlock Text="قرض دار"
+                                               FontSize="{DynamicResource FontSizeTiny}"
+                                               Foreground="{DynamicResource TextOnSidebarMutedBrush}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Account (active customer) | کھاتہ -->
+                        <Button x:Name="BtnNavAccount"
+                                Style="{DynamicResource SidebarNavButtonStyle}"
+                                Tag="Account"
+                                Visibility="Visible">
+                            <StackPanel Orientation="Horizontal">
+                                <Viewbox Width="18" Height="18" VerticalAlignment="Center"><Canvas Width="24" Height="24"><Path Fill="White" Data="M19 3h-4.18C14.4 1.84 13.3 1 12 1c-1.3 0-2.4.84-2.82 2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-7 0c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm2 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/></Canvas></Viewbox>
+                                <StackPanel Margin="12,0,0,0">
+                                    <TextBlock Text="Account"
+                                               FontSize="{DynamicResource FontSizeNormal}"
+                                               FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextOnSidebarBrush}"/>
+                                    <TextBlock Text="کھاتہ"
+                                               FontSize="{DynamicResource FontSizeTiny}"
+                                               Foreground="{DynamicResource TextOnSidebarMutedBrush}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Button>
+
+                        <!-- Divider | تقسیم -->
+                        <Border Height="1"
+                                Background="{DynamicResource DividerBrush}"
+                                Margin="16,8,16,8"/>
+
+                        <!-- Settings | ترتیبات -->
+                        <Button x:Name="BtnNavSettings"
+                                Style="{DynamicResource SidebarNavButtonStyle}"
+                                Tag="Settings">
+                            <StackPanel Orientation="Horizontal">
+                                <Viewbox Width="18" Height="18" VerticalAlignment="Center"><Canvas Width="24" Height="24"><Path Fill="White" Data="M19.14,12.94c0.04-0.3,0.06-0.61,0.06-0.94c0-0.32-0.02-0.64-0.07-0.94l2.03-1.58c0.18-0.14,0.23-0.41,0.12-0.61l-1.92-3.32c-0.12-0.22-0.37-0.29-0.59-0.22l-2.39,0.96c-0.5-0.38-1.03-0.7-1.62-0.94L14.4,2.81c-0.04-0.24-0.24-0.41-0.48-0.41h-3.84c-0.24,0-0.43,0.17-0.47,0.41L9.25,5.35C8.66,5.59,8.12,5.92,7.63,6.29L5.24,5.33c-0.22-0.08-0.47,0-0.59,0.22L2.74,8.87C2.62,9.08,2.66,9.34,2.86,9.48l2.03,1.58C4.84,11.36,4.8,11.69,4.8,12s0.02,0.64,0.07,0.94l-2.03,1.58c-0.18,0.14-0.23,0.41-0.12,0.61l1.92,3.32c0.12,0.22,0.37,0.29,0.59,0.22l2.39-0.96c0.5,0.38,1.03,0.7,1.62,0.94l0.36,2.54c0.05,0.24,0.24,0.41,0.48,0.41h3.84c0.24,0,0.44-0.17,0.47-0.41l0.36-2.54c0.59-0.24,1.13-0.56,1.62-0.94l2.39,0.96c0.22,0.08,0.47,0,0.59-0.22l1.92-3.32c0.12-0.22,0.07-0.47-0.12-0.61L19.14,12.94z M12,15.6c-1.98,0-3.6-1.62-3.6-3.6s1.62-3.6,3.6-3.6s3.6,1.62,3.6,3.6S13.98,15.6,12,15.6z"/></Canvas></Viewbox>
+                                <StackPanel Margin="12,0,0,0">
+                                    <TextBlock Text="Settings"
+                                               FontSize="{DynamicResource FontSizeNormal}"
+                                               FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextOnSidebarBrush}"/>
+                                    <TextBlock Text="ترتیبات"
+                                               FontSize="{DynamicResource FontSizeTiny}"
+                                               Foreground="{DynamicResource TextOnSidebarMutedBrush}"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Button>
+
+                    </StackPanel>
+
+                    <!-- Bottom: User Info + Logout | نیچے: صارف + لاگ آؤٹ -->
+                    <Border Grid.Row="3"
+                            Padding="16,12"
+                            BorderBrush="{DynamicResource BorderLightBrush}"
+                            BorderThickness="0,1,0,0">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+
+                            <!-- User Avatar + Name -->
+                            <StackPanel Grid.Column="0"
+                                        Orientation="Horizontal"
+                                        VerticalAlignment="Center">
+                                <!-- Avatar circle -->
+                                <Border Width="34" Height="34"
+                                        Background="{DynamicResource PrimaryBrush}"
+                                        CornerRadius="17">
+                                    <TextBlock x:Name="TxtUserInitial"
+                                               Text="A"
+                                               FontSize="{DynamicResource FontSizeMedium}"
+                                               FontWeight="Bold"
+                                               Foreground="{DynamicResource PrimaryForegroundBrush}"
+                                               HorizontalAlignment="Center"
+                                               VerticalAlignment="Center"/>
+                                </Border>
+
+                                <StackPanel Margin="10,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock x:Name="TxtCurrentUser"
+                                               Text="Admin"
+                                               FontSize="{DynamicResource FontSizeSmall}"
+                                               FontWeight="SemiBold"
+                                               Foreground="{DynamicResource TextOnSidebarBrush}"/>
+                                    <TextBlock Text="Logged In | لاگ ان"
+                                               FontSize="{DynamicResource FontSizeTiny}"
+                                               Foreground="{DynamicResource TextOnSidebarMutedBrush}"/>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <!-- Logout Button -->
+                            <Button x:Name="BtnLogout"
+                                Grid.Column="1"
+                                Style="{StaticResource WindowControlButtonStyle}"
+                                ToolTip="Logout | لاگ آؤٹ"
+                                VerticalAlignment="Center"
+                                Padding="6"
+                                Width="32"
+                                Height="32">
+                                <Viewbox Width="18" Height="18">
+                                    <Canvas Width="24" Height="24">
+                                        <Path Fill="White" 
+                                            Data="M17 7l-1.41 1.41L18.17 11H8v2h10.17l-2.58 2.58L17 17l5-5zM4 5h8V3H4c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h8v-2H4V5z"/>
+                                    </Canvas>
+                                </Viewbox>
+                            </Button>
+                        </Grid>
+                    </Border>
+
+                </Grid>
+            </Border>
+
+            <!-- ── PAGE CONTENT FRAME | پیج کنٹینٹ فریم ──────────── -->
+            <Frame x:Name="MainFrame"
+                   Grid.Column="1"
+                   NavigationUIVisibility="Hidden"
+                   Background="{DynamicResource AppBackgroundBrush}"/>
+
+        </Grid>
+
+        <!-- ══════════════════════════════════════════════════════
+             LAYER 2 — LOGIN OVERLAY | لاگ ان اوورلے
+             Shown on top of shell until user logs in
+        ═══════════════════════════════════════════════════════════ -->
+        <Grid x:Name="LoginOverlay"
+              Background="{DynamicResource AppBackgroundBrush}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
+
+            <!-- Login Card | لاگ ان کارڈ -->
+            <Border Grid.Row="1"
+                    Width="420"
+                    Background="{DynamicResource CardBackgroundBrush}"
+                    BorderBrush="{DynamicResource BorderBrush}"
+                    BorderThickness="1"
+                    CornerRadius="{DynamicResource RadiusXLarge}"
+                    Padding="40,36">
+                <StackPanel>
+
+                    <!-- Logo + Title | لوگو + عنوان -->
+                    <Viewbox Width="52" Height="52" HorizontalAlignment="Center" Margin="0,0,0,8">
+                        <Canvas Width="24" Height="24">
+                            <Path Fill="White"
+                                  Data="M11.8 10.9c-2.27-.59-3-1.2-3-2.15 0-1.09 1.01-1.85 2.7-1.85 1.78 0 2.44.85 2.5 2.1h2.21c-.07-1.72-1.12-3.3-3.21-3.81V3h-3v2.16c-1.94.42-3.5 1.68-3.5 3.61 0 2.31 1.91 3.46 4.7 4.13 2.5.6 3 1.48 3 2.41 0 .69-.49 1.79-2.7 1.79-2.06 0-2.87-.92-2.98-2.1h-2.2c.12 2.19 1.76 3.42 3.68 3.83V21h3v-2.15c1.95-.37 3.5-1.5 3.5-3.55 0-2.84-2.43-3.81-4.7-4.4z"/>
+                        </Canvas>
+                    </Viewbox>
+                    <TextBlock Text="Loan Management System"
+                               FontSize="{DynamicResource FontSizeXLarge}"
+                               FontWeight="Bold"
+                               Foreground="{DynamicResource TextPrimaryBrush}"
+                               HorizontalAlignment="Center"/>
+                    <TextBlock Text="قرض مینجمنٹ سسٹم"
+                               FontSize="{DynamicResource FontSizeMedium}"
+                               Foreground="{DynamicResource TextSecondaryBrush}"
+                               HorizontalAlignment="Center"
+                               Margin="0,4,0,28"/>
+
+                    <!-- Username | صارف نام -->
+                    <TextBlock Text="Username | صارف نام"
+                               Style="{DynamicResource FormLabelStyle}"/>
+                    <TextBox x:Name="TxtUsername"
+                             Style="{DynamicResource AppTextBoxStyle}"
+                             Text="{Binding Username, UpdateSourceTrigger=PropertyChanged}"
+                             Margin="0,0,0,14"/>
+
+                    <!-- Password | پاس ورڈ -->
+                    <TextBlock Text="Password | پاس ورڈ"
+                               Style="{DynamicResource FormLabelStyle}"/>
+                    <PasswordBox x:Name="PwdPassword"
+                                 Style="{DynamicResource AppPasswordBoxStyle}"
+                                 Margin="0,0,0,20"/>
+
+                    <!-- Status Message | حیثیت پیغام -->
+                    <Border x:Name="LoginStatusBorder"
+                            Visibility="Collapsed"
+                            CornerRadius="{DynamicResource RadiusMedium}"
+                            Padding="14,10"
+                            Margin="0,0,0,16">
+                        <TextBlock x:Name="TxtLoginStatus"
+                                   FontSize="{DynamicResource FontSizeSmall}"
+                                   TextWrapping="Wrap"
+                                   HorizontalAlignment="Center"/>
+                    </Border>
+
+                    <!-- Login Button | لاگ ان بٹن -->
+                    <Button x:Name="BtnLogin"
+                            Content="🔐 Login | لاگ ان کریں"
+                            Style="{DynamicResource PrimaryButtonStyle}"
+                            Command="{Binding LoginCommand}"
+                            Height="46"
+                            FontSize="{DynamicResource FontSizeMedium}"
+                            Margin="0,0,0,14"/>
+
+                    <!-- Forgot Password Link | پاس ورڈ بھول گئے؟ -->
+                    <TextBlock x:Name="TxtForgotPassword"
+                               Text="🔓 Forgot Password? | پاس ورڈ بھول گئے؟"
+                               FontSize="{DynamicResource FontSizeSmall}"
+                               Foreground="{DynamicResource AccentBrush}"
+                               HorizontalAlignment="Center"
+                               Cursor="Hand"
+                               Margin="0,0,0,14">
+                       
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="TextDecorations" Value="None"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="TextDecorations" Value="Underline"/>
+                                        <Setter Property="Foreground" Value="{DynamicResource AccentLightBrush}"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+
+                    <!-- Busy Indicator | مصروف اشارہ -->
+                    <TextBlock x:Name="TxtLoginBusy"
+                               Text="⏳ Please wait... | براہ کرم انتظار کریں..."
+                               FontSize="{DynamicResource FontSizeSmall}"
+                               Foreground="{DynamicResource TextSecondaryBrush}"
+                               HorizontalAlignment="Center"
+                               Visibility="Collapsed"/>
+
+                </StackPanel>
+            </Border>
+        </Grid>
+
+    </Grid>
+</Window>

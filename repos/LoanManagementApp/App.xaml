@@ -1,0 +1,112 @@
+﻿<Application x:Class="LoanManagementApp.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:helpers="clr-namespace:LoanManagementApp.Helpers"
+             Startup="App_Startup">
+
+    <!-- ═══════════════════════════════════════════════════════════
+         APP.XAML | ایپ
+         LoanManagementApp — Global Resources, Themes, Converters
+         تمام عالمی وسائل، تھیمز، کنورٹرز
+    ════════════════════════════════════════════════════════════════ -->
+
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+
+                <!-- ── ACTIVE THEME (fixed) | فعال تھیم ── -->
+                <!-- Only DarkTheme is used (no light theme option) -->
+                <!-- صرف گہرا تھیم استعمال ہوتا ہے (روشن تھیم کا آپشن نہیں) -->
+                <ResourceDictionary Source="Themes/DarkTheme.xaml"/>
+
+                <!-- ── STYLES & ICONS | اسٹائلز اور آئیکنز ── -->
+                <ResourceDictionary Source="Themes/Styles.xaml"/>
+                <ResourceDictionary Source="Themes/Icons.xaml"/>
+
+            </ResourceDictionary.MergedDictionaries>
+
+            <!-- ════════════════════════════════════════════════════
+                 VALUE CONVERTERS | ویلیو کنورٹرز
+                 Register all IValueConverter classes here
+                 تمام IValueConverter کلاسز یہاں رجسٹر کریں
+            ═════════════════════════════════════════════════════════ -->
+
+            <!-- ── Visibility Converters | ویزیبیلٹی کنورٹرز ── -->
+            <helpers:BoolToVisibilityConverter
+                x:Key="BoolToVisibilityConverter"/>
+            <helpers:InverseBoolToVisibilityConverter
+                x:Key="InverseBoolToVisibilityConverter"/>
+            <helpers:NullToVisibilityConverter
+                x:Key="NullToVisibilityConverter"/>
+            <helpers:ZeroToVisibilityConverter
+                x:Key="ZeroToVisibilityConverter"/>
+            <helpers:StringNotEmptyToVisibilityConverter
+                x:Key="StringNotEmptyToVisibilityConverter"/>
+            <helpers:StringToVisibilityConverter
+                x:Key="StringToVisibilityConverter"/>
+
+            <!-- ── Bool Converters | بولین کنورٹرز ── -->
+            <helpers:InverseBoolConverter
+                x:Key="InverseBoolConverter"/>
+
+            <!-- ── Status Message Converters | حیثیت پیغام کنورٹرز ── -->
+            <!-- Used in all 4 Dialogs + Pages for status banners       -->
+            <helpers:BoolToStatusBackgroundConverter
+                x:Key="BoolToStatusBackgroundConverter"/>
+            <helpers:BoolToStatusBorderConverter
+                x:Key="BoolToStatusBorderConverter"/>
+            <helpers:BoolToStatusForegroundConverter
+                x:Key="BoolToStatusForegroundConverter"/>
+            <helpers:BoolToStatusColorConverter
+                x:Key="BoolToStatusColorConverter"/>
+
+            <!-- ── Overdue Converters ── -->
+            <helpers:OverdueToBackgroundConverter x:Key="OverdueToBackgroundConverter"/>
+            <helpers:OverdueToTextConverter x:Key="OverdueToTextConverter"/>
+
+            <!-- ── Confirmation Dialog Converters | تصدیق ڈائیلاگ ── -->
+            <helpers:BoolToWarningBackgroundConverter
+                x:Key="BoolToWarningBackgroundConverter"/>
+            <helpers:BoolToWarningBorderConverter
+                x:Key="BoolToWarningBorderConverter"/>
+            <helpers:BoolToDangerPrimaryButtonConverter
+                x:Key="BoolToDangerPrimaryButtonConverter"/>
+
+            <!-- ── Loan & Payment Converters | قرض اور ادائیگی ── -->
+            <helpers:LoanStatusToColorConverter
+                x:Key="LoanStatusToColorConverter"/>
+            <helpers:LoanStatusToBackgroundConverter
+                x:Key="LoanStatusToBackgroundConverter"/>
+            <helpers:OverdueToColorConverter
+                x:Key="OverdueToColorConverter"/>
+            <helpers:DecimalToCurrencyConverter
+                x:Key="DecimalToCurrencyConverter"/>
+            <helpers:AedToPkrConverter
+                x:Key="AedToPkrConverter"/>
+            <helpers:PaymentTypeToDisplayConverter
+                x:Key="PaymentTypeToDisplayConverter"/>
+
+            <!-- ── Date & Display Converters | تاریخ اور ڈسپلے ── -->
+            <helpers:DateToShortStringConverter
+                x:Key="DateToShortStringConverter"/>
+            <helpers:InitialsConverter
+                x:Key="InitialsConverter"/>
+
+            <!-- ── Multi-Value Converters | ملٹی ویلیو کنورٹرز ── -->
+            <helpers:AmountToProgressConverter
+                x:Key="AmountToProgressConverter"/>
+            <helpers:PercentageToWidthConverter
+                x:Key="PercentageToWidthConverter"/>
+
+            <!-- ── Amount to Height Converter (for chart bars) ── -->
+            <helpers:AmountToHeightConverter
+                x:Key="AmountToHeightConverter"/>
+
+            <!-- ── Index Converter for ListView row numbers | صف نمبر کے لیے ── -->
+            <helpers:IndexConverter
+                x:Key="IndexConverter"/>
+
+        </ResourceDictionary>
+    </Application.Resources>
+
+</Application>

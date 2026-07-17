@@ -1,0 +1,239 @@
+<Window x:Class="LoanManagementApp.Views.Dialogs.RecordPaymentDialog"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:LoanManagementApp.ViewModels"
+        xmlns:models="clr-namespace:LoanManagementApp.Models"
+        Title="Record Payment | ادائیگی ریکارڈ کریں"
+        Width="500" SizeToContent="Height"
+        WindowStartupLocation="CenterOwner"
+        ResizeMode="NoResize"
+        Background="{DynamicResource DialogBackgroundBrush}">
+
+    <!-- ═══════════════════════════════════════════════════════════
+         RECORD PAYMENT DIALOG | ادائیگی ریکارڈ ڈائیلاگ
+         No LetterSpacing / CharacterSpacing used
+    ════════════════════════════════════════════════════════════════ -->
+
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Themes/DarkTheme.xaml"/>
+                <ResourceDictionary Source="/Themes/Styles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+    <Window.DataContext>
+        <vm:PaymentViewModel/>
+    </Window.DataContext>
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <!-- Title Bar -->
+            <RowDefinition Height="*"/>
+            <!-- Content -->
+            <RowDefinition Height="Auto"/>
+            <!-- Footer -->
+        </Grid.RowDefinitions>
+
+        <!-- ── TITLE BAR | عنوان بار ──────────────────────────────── -->
+        <Border Grid.Row="0"
+                Background="{DynamicResource HeaderBackgroundBrush}"
+                Padding="24,16">
+            <StackPanel>
+                <TextBlock Text="💵 Record Payment | ادائیگی ریکارڈ کریں"
+                           FontSize="{DynamicResource FontSizeLarge}"
+                           FontWeight="Bold"
+                           Foreground="White"/>
+                <TextBlock Text="{Binding CustomerName, StringFormat=Customer: {0} | قرض دار: {0}}"
+                           FontSize="{DynamicResource FontSizeSmall}"
+                           Foreground="{DynamicResource TextSecondaryBrush}"
+                           Margin="0,4,0,0"/>
+            </StackPanel>
+        </Border>
+
+        <!-- ── CONTENT | مواد ─────────────────────────────────────── -->
+        <ScrollViewer Grid.Row="1"
+                      Style="{DynamicResource AppScrollViewerStyle}"
+                      MaxHeight="520">
+            <StackPanel Margin="24,20,24,0">
+
+                <!-- ── LOAN SUMMARY BANNER | قرض خلاصہ ─────────────── -->
+                <Border Background="{DynamicResource InfoLightBrush}"
+                        BorderBrush="{DynamicResource InfoBrush}"
+                        BorderThickness="1"
+                        CornerRadius="{DynamicResource RadiusMedium}"
+                        Padding="16,12"
+                        Margin="0,0,0,16">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="12"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Grid.Column="0">
+                            <TextBlock Text="Remaining Balance | باقی رقم"
+                                       FontSize="{DynamicResource FontSizeSmall}"
+                                       Foreground="{DynamicResource InfoForegroundBrush}"/>
+                            <TextBlock Text="{Binding RemainingBalanceDisplay}"
+                                       FontSize="{DynamicResource FontSizeMedium}"
+                                       FontWeight="Bold"
+                                       Foreground="{DynamicResource TextPrimaryBrush}"
+                                       Margin="0,2,0,0"/>
+                        </StackPanel>
+
+                        <StackPanel Grid.Column="2">
+                            <TextBlock Text="Remaining Installments | باقی اقساط"
+                                       FontSize="{DynamicResource FontSizeSmall}"
+                                       Foreground="{DynamicResource InfoForegroundBrush}"/>
+                            <TextBlock Text="{Binding InstallmentInfoDisplay}"
+                                       FontSize="{DynamicResource FontSizeMedium}"
+                                       FontWeight="Bold"
+                                       Foreground="{DynamicResource TextPrimaryBrush}"
+                                       Margin="0,2,0,0"/>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <!-- ── PAYMENT AMOUNT | ادائیگی رقم ─────────────────── -->
+                <TextBlock Text="Payment Amount (PKR) | ادائیگی رقم"
+                           Style="{DynamicResource FormLabelStyle}"/>
+                <Grid Margin="0,0,0,6">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="10"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBox Grid.Column="0"
+                             x:Name="TxtPaidAmount"
+                             Text="{Binding PaidAmount, UpdateSourceTrigger=PropertyChanged}"
+                             Style="{DynamicResource AppTextBoxStyle}"/>
+
+                    <Button Grid.Column="2"
+                            Content="📋 Fill Suggested | تجویز بھریں"
+                            Command="{Binding FillSuggestedCommand}"
+                            Style="{DynamicResource SecondaryButtonStyle}"
+                            VerticalAlignment="Stretch"/>
+                </Grid>
+
+                <!-- Balance after payment preview | ادائیگی کے بعد بیلنس -->
+                <TextBlock Text="{Binding BalanceAfterPaymentDisplay}"
+                           FontSize="{DynamicResource FontSizeSmall}"
+                           Foreground="{DynamicResource AccentBrush}"
+                           Margin="0,0,0,14"/>
+
+                <!-- ── PAYMENT DATE | ادائیگی کی تاریخ ──────────────── -->
+                <TextBlock Text="Payment Date | ادائیگی کی تاریخ"
+                           Style="{DynamicResource FormLabelStyle}"/>
+                <DatePicker SelectedDate="{Binding PaymentDate}"
+                            Style="{StaticResource AppDatePickerStyle}"
+                            Margin="0,0,0,14"/>
+
+                <!-- ── PAYMENT TYPE | ادائیگی کی قسم ────────────────── -->
+                <TextBlock Text="Payment Type | ادائیگی کی قسم"
+                           Style="{DynamicResource FormLabelStyle}"/>
+                <ComboBox ItemsSource="{Binding PaymentTypes}"
+                          SelectedItem="{Binding SelectedPaymentType}"
+                          Style="{StaticResource AppComboBoxStyle}"
+                          Margin="0,0,0,14">
+                    <ComboBox.ItemTemplate>
+                        <DataTemplate>
+                            <TextBlock Text="{Binding}"/>
+                        </DataTemplate>
+                    </ComboBox.ItemTemplate>
+                </ComboBox>
+
+                <!-- ── PAYMENT METHOD DETAILS | ادائیگی طریقہ (ComboBox) ── -->
+                <TextBlock Text="Payment Method Details | ادائیگی طریقے کی تفصیل"
+                           Style="{DynamicResource FormLabelStyle}"/>
+                <ComboBox x:Name="CmbPaymentMethod"
+                          ItemsSource="{Binding PaymentMethodOptions}"
+                          SelectedItem="{Binding PaymentMethod, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Style="{StaticResource AppComboBoxStyle}"
+                          Margin="0,0,0,14"/>
+
+                <!-- ── RECEIVED BY | وصول کنندہ (Auto-filled, ReadOnly) ── -->
+                <TextBlock Text="Received By | وصول کنندہ"
+                           Style="{DynamicResource FormLabelStyle}"/>
+                <TextBox Text="{Binding ReceivedBy, UpdateSourceTrigger=PropertyChanged}"
+                         IsReadOnly="True"
+                         Background="{DynamicResource TableHeaderBrush}"
+                         Style="{DynamicResource AppTextBoxStyle}"
+                         Margin="0,0,0,14"/>
+
+                <!-- ── NOTES | نوٹس (ComboBox with editable) ─────────── -->
+                <TextBlock Text="Notes / Remarks | نوٹس / ریمارکس"
+                           Style="{DynamicResource FormLabelStyle}"/>
+                <ComboBox x:Name="CmbNotes"
+                          ItemsSource="{Binding NotesOptions}"
+                          SelectedItem="{Binding Notes, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                          Style="{StaticResource AppComboBoxStyle}"
+                          Margin="0,0,0,14"/>
+
+                <!-- ── STATUS MESSAGE | حیثیت پیغام ─────────────────── -->
+                <Border Visibility="{Binding HasStatusMessage,
+                            Converter={StaticResource BoolToVisibilityConverter}}"
+                        Background="{Binding IsStatusSuccess,
+                            Converter={StaticResource BoolToStatusBackgroundConverter}}"
+                        BorderBrush="{Binding IsStatusSuccess,
+                            Converter={StaticResource BoolToStatusBorderConverter}}"
+                        BorderThickness="1"
+                        CornerRadius="{DynamicResource RadiusMedium}"
+                        Padding="14,10"
+                        Margin="0,0,0,14">
+                    <TextBlock Text="{Binding StatusMessage}"
+                               FontSize="{DynamicResource FontSizeSmall}"
+                               Foreground="{Binding IsStatusSuccess,
+                                   Converter={StaticResource BoolToStatusForegroundConverter}}"
+                               TextWrapping="Wrap"/>
+                </Border>
+
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- ── FOOTER BUTTONS | بٹنز ─────────────────────────────── -->
+        <Border Grid.Row="2"
+                Background="{DynamicResource HeaderBackgroundBrush}"
+                BorderBrush="{DynamicResource BorderBrush}"
+                BorderThickness="0,1,0,0"
+                Padding="24,14">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="12"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="10"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <TextBlock Grid.Column="0"
+                           Text="⏳ Saving... | محفوظ ہو رہا ہے..."
+                           FontSize="{DynamicResource FontSizeSmall}"
+                           Foreground="{DynamicResource TextSecondaryBrush}"
+                           VerticalAlignment="Center"
+                           Visibility="{Binding IsBusy,
+                               Converter={StaticResource BoolToVisibilityConverter}}"/>
+
+                <Button Grid.Column="2"
+                        Content="✖ Cancel | منسوخ"
+                        Command="{Binding CancelCommand}"
+                        Style="{DynamicResource SecondaryButtonStyle}"
+                        IsEnabled="{Binding IsNotBusy}"
+                        x:Name="BtnCancel"
+                        MinWidth="120"
+                        Padding="12,8"/>
+
+                <Button Grid.Column="4"
+                        Content="💾 Record Payment | ادائیگی ریکارڈ کریں"
+                        Command="{Binding RecordPaymentCommand}"
+                        Style="{DynamicResource PrimaryButtonStyle}"
+                        x:Name="BtnRecord"
+                        MinWidth="230"
+                        Padding="12,0"/>
+            </Grid>
+        </Border>
+    </Grid>
+</Window>
